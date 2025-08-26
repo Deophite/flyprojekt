@@ -8,7 +8,7 @@ public class Converter {
 
         //Variablen für die Input und Output Dateien. Bei Input muss noch geschaut werden, wie die Datei hinzugefügt wird für Variablen Namen.
         String input = "src/main/dateixls/AA.xls";
-        String output = String.format("src/main/dateicsv/%s.csv", DateiName(input));
+        String output = "src/main/dateicsv/" + DateiName(input) + ".xls";
 
         Workbook workbook = new Workbook();
 
@@ -26,6 +26,7 @@ public class Converter {
     //Funktion um den Dateinamen auszulesen.
     public static String DateiName (String input) {
 
+        //Dateiname wird hier aus dem Inputpfad rausgenommen und kann weiter genutzt werden.
         String dateiname = input.substring(input.lastIndexOf("/")+1, input.lastIndexOf("."));
 
         return dateiname;
