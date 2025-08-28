@@ -17,6 +17,15 @@
         <junit.version>5.10.2</junit.version>
     </properties>
 
+    <!--Repository für die dependency des xls converters-->
+    <repositories>
+        <repository>
+            <id>com.e-iceblue</id>
+            <name>e-iceblue</name>
+            <url>https://repo.e-iceblue.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -37,6 +46,13 @@
             <scope>test</scope>
         </dependency>
 
+        <!--Das ist die Dependency für den xls converter, benötigt in Converter-->
+        <dependency>
+            <groupId>e-iceblue</groupId>
+            <artifactId>spire.xls</artifactId>
+            <version>15.8.3</version>
+        </dependency>
+      
         <!--Spring boot dependencies mit JPA fürs Daten Mappen-->
         <dependency>
             <groupId>org.springframework</groupId>
