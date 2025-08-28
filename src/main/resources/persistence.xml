@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/index.html"
+             xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/index.html
+          http://www.oracle.com/webfolder/technetwork/jsc/xml/ns/persistence/index.html/persistence_2_1.xsd"
+             version="2.1">
+    <!-- Change the username and password with appropriate values -->
+    <persistence-unit name="GeeksDB">
+        <properties>
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.140.130.17:1433?useSSL=false" />
+            <property name="javax.persistence.jdbc.user" value="dba6" />
+            <property name="javax.persistence.jdbc.password" value="dba6" />
+            <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+</persistence>
