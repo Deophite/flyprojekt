@@ -21,7 +21,7 @@ public class Fluggesellschaft {
     private String fg_ID;
     private String fluggesellschaftName;
 
-    @OneToMany(mappedBy = "Fluggesellschaft")
+    @OneToMany(mappedBy = "fluggesellschaft")
     private List<Fluglinie> fluglinien;
 
 }

@@ -24,6 +24,6 @@ public class Hersteller {
     private int H_ID;
     private String herstellerName;
 
-    @OneToMany(mappedBy = "Hersteller")
+    @OneToMany(mappedBy = "hersteller")
     private List<Flugzeug> flugzeuge;
 }

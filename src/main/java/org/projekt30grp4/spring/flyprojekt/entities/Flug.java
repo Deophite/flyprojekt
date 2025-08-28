@@ -23,7 +23,7 @@ public class Flug {
     private int bel_sitze;
 
     @ManyToOne
-    @JoinColumn(name = "Typ")
+    @JoinColumn(name = "typ")
     private Flugzeug flugzeug;
 
     @ManyToOne

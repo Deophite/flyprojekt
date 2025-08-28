@@ -24,10 +24,10 @@ public class Flugzeug {
 
     private int sitze;
 
-    @OneToMany(mappedBy = "Flugzeug")
+    @OneToMany(mappedBy = "flugzeug")
     private List<Fluglinie> fluglinien;
 
-    @OneToMany(mappedBy = "Flugzeug")
+    @OneToMany(mappedBy = "flugzeug")
     private List<Flug> flug;
 
 
