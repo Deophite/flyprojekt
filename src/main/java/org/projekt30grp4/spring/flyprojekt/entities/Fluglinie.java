@@ -33,11 +33,11 @@ public class Fluglinie {
     private BigDecimal preis;
 
     @ManyToOne
-    @JoinColumn(name = "Typ")
+    @JoinColumn(name = "typ")
     private Flugzeug flugzeug;
 
     @ManyToOne
-    @JoinColumn(name = "Fg_ID")
+    @JoinColumn(name = "fg_ID")
     private Fluggesellschaft fluggesellschaft;
 
 }

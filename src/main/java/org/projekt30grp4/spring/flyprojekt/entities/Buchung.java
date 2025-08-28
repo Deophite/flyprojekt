@@ -22,7 +22,7 @@ public class Buchung {
     private String datum;
 
     @ManyToOne
-    @JoinColumn(name = "P_ID")
+    @JoinColumn(name = "p_ID")
     private Passagier passagier;
 
     @OneToMany(mappedBy = "buchung")

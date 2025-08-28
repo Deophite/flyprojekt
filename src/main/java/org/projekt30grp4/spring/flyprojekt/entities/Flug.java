@@ -27,6 +27,6 @@ public class Flug {
     private Flugzeug flugzeug;
 
     @ManyToOne
-    @JoinColumn(name = "B_ID")
+    @JoinColumn(name = "b_ID")
     private Buchung buchung;
 }

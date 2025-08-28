@@ -26,7 +26,7 @@ public class Passagier {
     private String Strasse;
     private String land;
 
-    @OneToMany(mappedBy = "passagier")
+    @OneToMany(mappedBy = "Passagier")
     private List<Buchung> buchungen;
 
 }
