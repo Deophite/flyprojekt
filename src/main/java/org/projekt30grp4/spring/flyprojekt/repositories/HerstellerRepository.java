@@ -4,6 +4,11 @@ import org.projekt30grp4.spring.flyprojekt.entities.Hersteller;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface HerstellerRepository extends JpaRepository<Hersteller, Integer> {
+
+    Optional<Hersteller> findByHerstellerName(String herstellerName);
+
 }

@@ -22,7 +22,7 @@ public class Hersteller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int H_ID;
-    private String Herstellername;
+    private String herstellerName;
 
     @OneToMany(mappedBy = "hersteller")
     private List<Flugzeug> flugzeuge;

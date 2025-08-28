@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+                                 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+             version="2.1">
+    <!-- Change the username and password with appropriate values -->
+    <persistence-unit name="Grp4">
+
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Hersteller</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Fluggesellschaft</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Flug</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Buchung</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Flughafen</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Fluglinie</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Passagier</class>
+        <class>org.projekt30grp4.spring.flyprojekt.entities.Flugzeug</class>
+
+        <properties>
+            <!--evtl mit trustServerCertificate=false nutzen falls encrypt alleine nicht hilft-->
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://10.140.130.17:1433;databaseName=Grp4;encrypt=false" />
+            <property name="javax.persistence.jdbc.user" value="dba6" />
+            <property name="javax.persistence.jdbc.password" value="dba6" />
+            <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+        </properties>
+    </persistence-unit>
+
+</persistence>

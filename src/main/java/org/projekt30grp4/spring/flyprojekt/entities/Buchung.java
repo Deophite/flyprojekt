@@ -19,7 +19,7 @@ public class Buchung {
 
     @Id
     private String b_ID;
-    private LocalDate datum;
+    private String datum;
 
     @ManyToOne
     @JoinColumn(name = "P_ID")

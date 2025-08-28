@@ -19,7 +19,7 @@ public class Flug {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int flug_ID;
-    private LocalDate datum;
+    private String datum;
     private int bel_sitze;
 
     @ManyToOne
