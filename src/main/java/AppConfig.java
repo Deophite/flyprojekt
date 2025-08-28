@@ -8,7 +8,7 @@ import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 @Configuration
 // Sucht die repositories im angegebenen Pfad
 @EnableJpaRepositories(basePackages = {"org.projekt30grp4.spring.flyprojekt.entities"})
-public class ContestAppConfig {
+public class AppConfig {
     @Bean
 
     //Verbindungsmanager der persistence Settings liest

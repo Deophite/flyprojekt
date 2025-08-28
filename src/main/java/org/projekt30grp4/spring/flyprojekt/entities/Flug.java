@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,8 +17,9 @@ import java.util.Date;
 public class Flug {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int flug_ID;
-    private Date datum;
+    private LocalDate datum;
     private int bel_sitze;
 
     @ManyToOne

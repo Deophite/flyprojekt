@@ -19,10 +19,11 @@ public class Passagier {
 
     @Id
     private int p_ID;
+    private String anrede;
     private String kompletterName;
     private String plz;
     private String ort;
-    private String Straße;
+    private String Strasse;
     private String land;
 
     @OneToMany(mappedBy = "passagier")
