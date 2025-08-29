@@ -6,4 +6,4 @@ Inserter erstellen =
   Aufgeteile Variablen dann nutzen um zu inserten
       insert command erstellen, Variablen einfügen
 
-      https://chatgpt.com/c/68adf392-d88c-8330-b538-ce5a61821910
+preis Data parse schauen wegen den , bei über 999
