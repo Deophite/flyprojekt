@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,6 +41,16 @@ public class DatenImport {
 
     @Transactional
     public void importDaten(String dateiPfad) {
+
+        List<Hersteller> herstellerList = new ArrayList<>();
+        List<Flugzeug> flugzeugList = new ArrayList<>();
+        List<Fluggesellschaft> fluggesellschaftList = new ArrayList<>();
+        List<Passagier> passagierList = new ArrayList<>();
+        List<Buchung> buchungList = new ArrayList<>();
+        List<Flug> flugList = new ArrayList<>();
+        List<Flughafen> flughafenList = new ArrayList<>();
+        List<Fluglinie> fluglinieList = new ArrayList<>();
+
         try (CSVReader reader = new CSVReader(new FileReader(dateiPfad))) {
             List<String[]> allRows = reader.readAll();
 
@@ -51,15 +60,13 @@ public class DatenImport {
                 DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("H:mm");
                 DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("HH:mm");
 
-
-
                 //Fluggesellschaft
                 String fg_id = data[0];
                 String fluggesellschaftName = data[1];
                 Fluggesellschaft fg = fluggesellschaftRepository.findById(fg_id).orElse(new Fluggesellschaft());
                 fg.setFg_ID(fg_id);
                 fg.setFluggesellschaftName(fluggesellschaftName);
-                fluggesellschaftRepository.save(fg);
+                fluggesellschaftList.add(fg);
 
                 // FLughafen
                 String flughafenName = data[4];
@@ -69,7 +76,7 @@ public class DatenImport {
                 fh.setFlughafenName(flughafenName);
                 fh.setStadt(stadt);
                 fh.setLand(land);
-                flughafenRepository.save(fh);
+                flughafenList.add(fh);
 
                 //Fluglinie
                 int fl_id = Integer.parseInt(data[3]);
@@ -86,7 +93,7 @@ public class DatenImport {
                 fl.setFl_ID(fl_id);
                 fl.setDauer(dauer);
                 fl.setPreis(preis);
-                fluglinieRepository.save(fl);
+                fluglinieList.add(fl);
 
                 //Flugzeug
                 String typ = data[13];
@@ -94,15 +101,15 @@ public class DatenImport {
                 Flugzeug fz = flugzeugRepository.findById(typ).orElse(new Flugzeug());
                 fz.setTyp(typ);
                 fz.setSitze(sitze);
-                flugzeugRepository.save(fz);
+                flugzeugList.add(fz);
 
                 //Buchung  b_id sind nicht einzigartig wir brauche hier noch den prefix vom datei-import
-                String b_id =  Converter.convname+ "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
+                String b_id =  Converteralt.convname+ "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
                 String datum  = data[18];
                 Buchung b = buchungRepository.findById(b_id).orElse(new Buchung());
                 b.setB_ID(b_id);
                 b.setDatum(datum);
-                buchungRepository.save(b);
+                buchungList.add(b);
 
                 //Passagier
                 int p_id = Integer.parseInt(data[19]);
@@ -120,7 +127,7 @@ public class DatenImport {
                 p.setOrt(ort);
                 p.setStrasse(strasse);
                 p.setLand(pland);
-                passagierRepository.save(p);
+                passagierList.add(p);
 
                 //Hersteller
                 String herstellerName = data[14];
@@ -132,7 +139,7 @@ public class DatenImport {
                     return herstellerRepository.save(h1);
                         });
                 h.setHerstellerName(herstellerName);
-                herstellerRepository.save(h);
+                herstellerList.add(h);
 
                 //Flug
                 String fdate = data[11];
@@ -140,15 +147,26 @@ public class DatenImport {
                 Flug f = new Flug();
                 f.setDatum(fdate);
                 f.setBel_sitze(bel_sitze);
-                flugRepository.save(f);
+                flugList.add(f);
 
             }
+
         } catch (IOException e) {
             throw new RuntimeException("Fehler beim Laden der Daten", e);
         } catch (CsvValidationException e) {
             throw new RuntimeException(e);
         } catch (CsvException e) {
             throw new RuntimeException(e);
+        } finally {
+
+            fluggesellschaftRepository.saveAll(fluggesellschaftList);
+            flughafenRepository.saveAll(flughafenList);
+            fluglinieRepository.saveAll(fluglinieList);
+            flugzeugRepository.saveAll(flugzeugList);
+            buchungRepository.saveAll(buchungList);
+            passagierRepository.saveAll(passagierList);
+            herstellerRepository.saveAll(herstellerList);
+            flugRepository.saveAll(flugList);
         }
     }
 }

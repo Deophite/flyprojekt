@@ -3,39 +3,54 @@ package org.projekt30grp4.spring.flyprojekt;
 import com.spire.xls.Workbook;
 import com.spire.xls.Worksheet;
 
+import java.io.File;
+
 public class Converter {
 
-    public static String input = "src/main/dateixls/AA.xls";
-    //Nutzung in Datenimport für Prefix
-    public static String convname = DateiName(input);
+    // Wird z. B. in DatenImport als Präfix genutzt
+    public static String convname = "unbekannt";
 
-    public static void main(String[] args) {
+    /**
+     * Konvertiert eine XLS-Datei aus uploads/dateixls/ in eine CSV in uploads/dateicsv/
+     * @param inputPfad Der komplette Pfad zur .xls-Datei
+     * @return Der Pfad zur erzeugten .csv-Datei
+     */
+    public static String convertXlsToCsv(String inputPfad) {
 
-        //Variablen für die Input und Output Dateien. Bei Input muss noch geschaut werden, wie die Datei hinzugefügt wird für Variablen Namen.
-        String output = "src/main/dateicsv/" + DateiName(input) + ".xls";
+        try {
+            // Dateiname extrahieren (ohne Endung)
+            String dateiname = DateiName(inputPfad);
+            convname = dateiname;
 
-        Workbook workbook = new Workbook();
+            // Zielpfad für .csv festlegen
+            String outputPfad = "uploads/dateicsv/" + dateiname + ".csv";
 
-        //Die xls Datei wird hier geladen, der source woher er die Datei nimmt.
-        workbook.loadFromFile(input);
+            // XLS laden
+            Workbook workbook = new Workbook();
+            workbook.loadFromFile(inputPfad);
 
-        //Damit nimmt er die gesamte seite(sheet) der xls datei von "get(0)"
-        Worksheet sheet = workbook.getWorksheets().get(0);
+            // Erstes Tabellenblatt auswählen
+            Worksheet sheet = workbook.getWorksheets().get(0);
 
-        //Hier speichert er die vorher ausgelesene Seite als csv Datei im Angegebenen Pfad und namen.
-        sheet.saveToFile(output,",");
+            // Als CSV abspeichern
+            sheet.saveToFile(outputPfad, ",");
 
+            return outputPfad;
+
+        } catch (Exception e) {
+            throw new RuntimeException("Fehler beim Konvertieren von XLS zu CSV: " + e.getMessage(), e);
+        }
     }
 
-    //Funktion um den Dateinamen auszulesen.
-    public static String DateiName(String input) {
-
-        //Dateiname wird hier aus dem Inputpfad rausgenommen und kann weiter genutzt werden.
-        String dateiname = input.substring(input.lastIndexOf("/")+1, input.lastIndexOf("."));
-
-        return dateiname;
+    /**
+     * Extrahiert den reinen Dateinamen ohne Pfad und Endung
+     * Beispiel: "uploads/dateixls/AA.xls" → "AA"
+     * @param inputPfad kompletter Pfad zur Datei
+     * @return Dateiname ohne Erweiterung
+     */
+    public static String DateiName(String inputPfad) {
+        File file = new File(inputPfad);
+        String name = file.getName(); // z.B. "AA.xls"
+        return name.substring(0, name.lastIndexOf('.'));
     }
-
-
-
 }
