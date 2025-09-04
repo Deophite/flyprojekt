@@ -1,6 +1,5 @@
 package org.projekt30grp4.spring.flyprojekt.entities;
 
-import com.sun.xml.internal.ws.resources.UtilMessages;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalTime;
 
 @Entity

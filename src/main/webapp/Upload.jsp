@@ -28,7 +28,7 @@
 <main class="page-content">
     <h4>Bitte w&auml;hlen Sie die Buchungsliste zum Hochladen in die Datenbank aus</h4>
 
-    <form action="upload" method="post" enctype="multipart/form-data">
+    <form action="/flyprojekt/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="datei" accept=".xls" required />
 
 
