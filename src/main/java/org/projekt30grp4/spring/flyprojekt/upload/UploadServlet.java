@@ -1,6 +1,6 @@
 package org.projekt30grp4.spring.flyprojekt.upload;
 
-import org.projekt30grp4.spring.flyprojekt.Converter;
+
 import org.projekt30grp4.spring.flyprojekt.ConverterAnders;
 import org.projekt30grp4.spring.flyprojekt.DatenImport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
 
-@WebServlet("/upload")
+@WebServlet("/uploadFile")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 
@@ -21,7 +21,7 @@ public class UploadServlet extends HttpServlet {
     private DatenImport datenImport;
 
     @Override
-    public void init() throws ServletException {
+    public void init()  {
         // Aktiviert Spring Autowiring im Servlet-Kontext
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
@@ -45,21 +45,31 @@ public class UploadServlet extends HttpServlet {
             return;
         }
 
-        // Zielpfad vorbereiten
-        Path uploadDir = Paths.get("C:/Users/AAdamski/IdeaProjects/flyprojekt/uploads/dateixls/");
-        Files.createDirectories(uploadDir);
-        Path inputFile = uploadDir.resolve(originalFileName);
+        String userHome = System.getProperty("user.home");
+        Path uploadDir = Paths.get(userHome, "upload");
 
-        System.out.println("Speichere unter: " + inputFile.toAbsolutePath());
+        try {
+            Files.createDirectories(uploadDir);
+            System.out.println("Directory already exists: " + uploadDir.toAbsolutePath());
+        } catch (IOException e) {
+            System.err.println("Fehler: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+
+
+       Path inputFile = uploadDir.resolve(originalFileName);
+
+       // System.out.println("Speichere unter: " + inputFile.toAbsolutePath());
 
         // Datei speichern
         try (InputStream inputStream = filePart.getInputStream()) {
             Files.copy(inputStream, inputFile, StandardCopyOption.REPLACE_EXISTING);
         }
-
+// .............................. HIER
         // Konvertierung und Import
         try {
-            String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString());
+            String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString(), uploadDir.toString());
             datenImport.importDaten(csvPfad);
 
             // Aufräumen

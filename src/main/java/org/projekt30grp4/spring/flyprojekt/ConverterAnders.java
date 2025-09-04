@@ -15,7 +15,7 @@ public class ConverterAnders {
      * @param inputPfad Der komplette Pfad zur .xls-Datei
      * @return Der Pfad zur erzeugten .csv-Datei
      */
-    public static String convertXlsToCsv(String inputPfad) {
+    public static String convertXlsToCsv(String inputPfad, String uploadDir) {
 
         try {
             // Dateiname extrahieren (ohne Endung)
@@ -23,7 +23,7 @@ public class ConverterAnders {
             convname = dateiname;
 
             // Zielpfad für .csv festlegen
-            String outputPfad = "C:/Users/AAdamski/IdeaProjects/flyprojekt/uploads/dateicsv/" + dateiname + ".csv";
+            String outputPfad = uploadDir + dateiname + ".csv";
 
             // XLS laden
             Workbook workbook = new Workbook();
