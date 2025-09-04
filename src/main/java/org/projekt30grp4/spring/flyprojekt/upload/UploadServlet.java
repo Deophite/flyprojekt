@@ -59,13 +59,12 @@ public class UploadServlet extends HttpServlet {
 
        Path inputFile = uploadDir.resolve(originalFileName);
 
-       // System.out.println("Speichere unter: " + inputFile.toAbsolutePath());
 
         // Datei speichern
         try (InputStream inputStream = filePart.getInputStream()) {
             Files.copy(inputStream, inputFile, StandardCopyOption.REPLACE_EXISTING);
         }
-// .............................. HIER
+// .............................. KONVERTIERUNG...........................................................
         // Konvertierung und Import
         try {
             String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString(), uploadDir.toString());
