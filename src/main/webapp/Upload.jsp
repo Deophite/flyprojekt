@@ -32,7 +32,7 @@
         <input type="file" name="datei" accept=".xls" required />
 
 
-        <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls, .csv</p>
+        <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls</p>
 
 
         <button type="submit">Senden</button>

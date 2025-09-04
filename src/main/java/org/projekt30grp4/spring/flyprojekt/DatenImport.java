@@ -104,7 +104,7 @@ public class DatenImport {
                 flugzeugList.add(fz);
 
                 //Buchung  b_id sind nicht einzigartig wir brauche hier noch den prefix vom datei-import
-                String b_id =  Converteralt.convname+ "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
+                String b_id =  Converter.convname+ "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
                 String datum  = data[18];
                 Buchung b = buchungRepository.findById(b_id).orElse(new Buchung());
                 b.setB_ID(b_id);

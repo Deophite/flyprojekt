@@ -1,7 +1,7 @@
 package org.projekt30grp4.spring.flyprojekt.upload;
 
 import org.projekt30grp4.spring.flyprojekt.Converter;
-import org.projekt30grp4.spring.flyprojekt.Converteralt;
+import org.projekt30grp4.spring.flyprojekt.ConverterAnders;
 import org.projekt30grp4.spring.flyprojekt.DatenImport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
@@ -30,9 +30,9 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("text/plain");
+        response.setContentType("multipart/form-data");
 
-        Part filePart = request.getPart("file");
+        Part filePart = request.getPart("datei");
         if (filePart == null || filePart.getSize() == 0) {
             response.getWriter().println("Fehler: Keine Datei hochgeladen.");
             return;
@@ -46,9 +46,11 @@ public class UploadServlet extends HttpServlet {
         }
 
         // Zielpfad vorbereiten
-        Path uploadDir = Paths.get("uploads/dateixls");
+        Path uploadDir = Paths.get("C:/Users/AAdamski/IdeaProjects/flyprojekt/uploads/dateixls/");
         Files.createDirectories(uploadDir);
         Path inputFile = uploadDir.resolve(originalFileName);
+
+        System.out.println("Speichere unter: " + inputFile.toAbsolutePath());
 
         // Datei speichern
         try (InputStream inputStream = filePart.getInputStream()) {
@@ -57,7 +59,7 @@ public class UploadServlet extends HttpServlet {
 
         // Konvertierung und Import
         try {
-            String csvPfad = Converter.convertXlsToCsv(inputFile.toString());
+            String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString());
             datenImport.importDaten(csvPfad);
 
             // Aufräumen
