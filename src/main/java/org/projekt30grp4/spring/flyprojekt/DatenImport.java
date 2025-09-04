@@ -42,6 +42,9 @@ public class DatenImport {
     @Transactional
     public void importDaten(String dateiPfad) {
 
+        //Debug
+//        System.out.println("Dateipfad im import: " + dateiPfad);
+
         List<Hersteller> herstellerList = new ArrayList<>();
         List<Flugzeug> flugzeugList = new ArrayList<>();
         List<Fluggesellschaft> fluggesellschaftList = new ArrayList<>();

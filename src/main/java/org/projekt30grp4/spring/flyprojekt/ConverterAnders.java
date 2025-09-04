@@ -18,6 +18,14 @@ public class ConverterAnders {
     public static String convertXlsToCsv(String inputPfad) {
 
         try {
+            //Debug
+            System.out.println("Pfad zum Laden: " + inputPfad);
+
+            File existingFile = new File(inputPfad);
+            if (!existingFile.exists()) {
+                throw new RuntimeException("Datei nix hier: " + inputPfad);
+            }
+
             // Dateiname extrahieren (ohne Endung)
             String dateiname = DateiName(inputPfad);
             convname = dateiname;

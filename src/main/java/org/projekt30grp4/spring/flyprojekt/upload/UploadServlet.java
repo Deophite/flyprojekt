@@ -18,7 +18,7 @@ import java.nio.file.*;
 public class UploadServlet extends HttpServlet {
 
     @Autowired
-    private DatenImport datenImport;
+    public DatenImport datenImport = new DatenImport();
 
     @Override
     public void init() throws ServletException {
@@ -50,6 +50,7 @@ public class UploadServlet extends HttpServlet {
         Files.createDirectories(uploadDir);
         Path inputFile = uploadDir.resolve(originalFileName);
 
+        //Debug
         System.out.println("Speichere unter: " + inputFile.toAbsolutePath());
 
         // Datei speichern
@@ -59,7 +60,16 @@ public class UploadServlet extends HttpServlet {
 
         // Konvertierung und Import
         try {
-            String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString());
+            String csvPfad1 = ConverterAnders.convertXlsToCsv(inputFile.toString());
+
+            //Debug
+            System.out.println("return vom Converter: " + csvPfad1);
+
+            String csvPfad = csvPfad1.replaceAll("/", "\\\\");
+
+            //Debug
+            System.out.println("Nach csvPfad replace: " + csvPfad);
+
             datenImport.importDaten(csvPfad);
 
             // Aufräumen
