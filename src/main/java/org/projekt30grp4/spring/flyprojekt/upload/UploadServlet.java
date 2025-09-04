@@ -53,7 +53,6 @@ public class UploadServlet extends HttpServlet {
             System.out.println("Directory already exists: " + uploadDir.toAbsolutePath());
         } catch (IOException e) {
             System.err.println("Fehler: " + e.getMessage());
-            e.printStackTrace();
         }
 
 
@@ -79,7 +78,7 @@ public class UploadServlet extends HttpServlet {
             response.getWriter().println("Upload, Konvertierung und Import erfolgreich.");
 
         } catch (Exception e) {
-            e.printStackTrace();
+
             response.getWriter().println("Fehler beim Verarbeiten der Datei: " + e.getMessage());
         }
     }
