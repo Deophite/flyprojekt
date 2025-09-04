@@ -28,13 +28,9 @@
 <main class="page-content">
     <h4>Bitte w&auml;hlen Sie die Buchungsliste zum Hochladen in die Datenbank aus</h4>
 
-    <form action="${pageContext.request.contextPath}/upload" method="post" enctype="multipart/form-data">
+    <form action="${pageContext.request.contextPath}/uploadFile" method="post" enctype="multipart/form-data">
         <input type="file" name="datei" accept=".xls" required />
-
-
         <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls</p>
-
-
         <button type="submit">Senden</button>
     </form>
 </main>

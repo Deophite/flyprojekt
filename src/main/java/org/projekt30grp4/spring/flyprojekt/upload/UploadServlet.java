@@ -73,7 +73,7 @@ public class UploadServlet extends HttpServlet {
             // Aufräumen
             Files.deleteIfExists(Paths.get(csvPfad));
             Files.deleteIfExists(inputFile);
-
+            // Hello
             response.getWriter().println("Upload, Konvertierung und Import erfolgreich.");
 
         } catch (Exception e) {
@@ -81,4 +81,8 @@ public class UploadServlet extends HttpServlet {
             response.getWriter().println("Fehler beim Verarbeiten der Datei: " + e.getMessage());
         }
     }
+
+
+
+
 }
