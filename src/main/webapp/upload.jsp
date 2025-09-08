@@ -2,7 +2,8 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Excel Upload in Datenbank</title>
+    <title>Projekt Fly Excel - DB</title>
+
     <style>
         body {
             font-family: verdana, serif;
@@ -33,33 +34,45 @@
         <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls</p>
         <button type="submit">Senden</button>
     </form>
-    <p id="onSubmit1" style="display: none">Ihre Dateien werden in die Datenbank gespeichert. Haben Sie ein bisschen Geduld. Das kann bis paar Minuten dauern!</p>
+    <p id="onSubmit1" style="display: none">Ihre Datei werden in die Datenbank gespeichert. Haben Sie ein bisschen Geduld. Das kann bis paar Minuten dauern!</p>
     <p id="result"></p>
 </main>
+
 <script>
     // JS - Form wird ausgewählt dann beim Submit wird default gestoppt. Nachdem JS übernimmt das Control
     // und sendet die Form zu UploadServlet. Dann erwartet auf Response in dem entweder kein Fehler oder Fehler kommt.
     // Die Fehlermeldung/Result wird in dem Element "result" auf dem Bildschirm gezeigt
-    document.getElementById("form").addEventListener("submit", function asd (e) {
-        e.preventDefault();
-        document.getElementById("onSubmit1").setAttribute("style", "display: block");
 
-        const formData = new FormData(this)
+      const form =  document.getElementById("form");
+      const btn = document.getElementById("submit");
+      const result = document.getElementById("result");
+      const waitMessage = document.getElementById("submit");
+      let isReady = false;
+
+        form.addEventListener("submit", function asd (e) {
+        e.preventDefault();
+        if (isReady) {
+            result.innerHTML= "";
+        }
+        waitMessage.setAttribute("style", "display: block");
+        const formData = new FormData(this);
 
         fetch("${pageContext.request.contextPath}/fileUpload", {
             method: "POST",
             body: formData
         }).then(res => res.text()).then((res) => {
-            document.getElementById("onSubmit1").setAttribute("style", "display: none");
+
+            waitMessage.setAttribute("style", "display: none");
 
             if (res.toString().includes("erfolgreich")) {
-                document.getElementById("result").setAttribute("style", "color: green; font-weight: bold;");
+                isReady = true;
+                result.setAttribute("style", "color: green; font-weight: bold;");
             } else {
-                document.getElementById("result").setAttribute("style", "color: red");
+                result.setAttribute("style", "color: red");
             }
-            document.getElementById("result").innerHTML = res;
+            result.innerHTML = res;
             }).catch(err => console.log(err));
-    })
+    });
 </script>
 
 </body>
