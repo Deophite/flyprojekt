@@ -88,7 +88,13 @@ public class DatenImport {
                 } else {
                      dauer = LocalTime.parse(data[10].trim(),formatter2);
                 }
-                BigDecimal preis = BigDecimal.valueOf(Double.parseDouble(data[12].replaceAll("\"", "").replaceAll(",",".")));
+                String vpreis = data[12].replace("\"", "");
+                if (vpreis.matches("\\d{1,3}(\\.\\d{3})*,\\d{2}"))
+                    vpreis = vpreis.replace(".", "").replace(",", ".");
+                else if (vpreis.matches("\\d+\\.\\d{2}")) {
+                }
+                BigDecimal preis = new BigDecimal(vpreis);
+
                 Fluglinie fl = fluglinieRepository.findById(fl_id).orElse(new Fluglinie());
                 fl.setFl_ID(fl_id);
                 fl.setDauer(dauer);
@@ -104,7 +110,7 @@ public class DatenImport {
                 flugzeugList.add(fz);
 
                 //Buchung  b_id sind nicht einzigartig wir brauche hier noch den prefix vom datei-import
-                String b_id =  Converter.convname+ "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
+                String b_id =  data[0] + "-" +data[17];  //Hier muss noch der Dateiname rausgezogen werden für prefix
                 String datum  = data[18];
                 Buchung b = buchungRepository.findById(b_id).orElse(new Buchung());
                 b.setB_ID(b_id);
