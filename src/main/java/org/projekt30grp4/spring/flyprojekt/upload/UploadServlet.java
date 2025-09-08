@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
 
-@WebServlet("/")
+@WebServlet("/fileUpload")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 
@@ -30,19 +30,14 @@ public class UploadServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        response.setContentType("multipart/form-data");
+        response.setContentType("text/plain;charset=UTF-8");
 
         Part filePart = request.getPart("datei");
-        if (filePart == null || filePart.getSize() == 0) {
-            response.getWriter().println("Fehler: Keine Datei hochgeladen.");
-            return;
-        }
 
         // Nur .xls zulassen
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         if (!originalFileName.toLowerCase().endsWith(".xls")) {
-            request.setAttribute("fehler", "Fehler: Es sind nur .xls Dateien erlaubt.");
-            request.getRequestDispatcher("/uploadresult.jsp").forward(request, response);
+             response.getWriter().write("Fehler: Es sind nur .xls Dateien.");
             return;
         }
 
@@ -51,15 +46,13 @@ public class UploadServlet extends HttpServlet {
 
         try {
             Files.createDirectories(uploadDir);
-            System.out.println("Directory already exists: " + uploadDir.toAbsolutePath());
+            System.out.println("Verzeichnis existiert schon: " + uploadDir.toAbsolutePath());
+
         } catch (IOException e) {
-            System.err.println("Fehler: " + e.getMessage());
+            response.getWriter().println("Fehler: " + e.getMessage());
         }
 
-
-
        Path inputFile = uploadDir.resolve(originalFileName);
-
 
         // Datei speichern
         try (InputStream inputStream = filePart.getInputStream()) {
@@ -78,10 +71,7 @@ public class UploadServlet extends HttpServlet {
             response.getWriter().println("Upload, Konvertierung und Import erfolgreich.");
 
         } catch (Exception e) {
-
             response.getWriter().println("Fehler beim Verarbeiten der Datei: " + e.getMessage());
         }
     }
-
-
 }
