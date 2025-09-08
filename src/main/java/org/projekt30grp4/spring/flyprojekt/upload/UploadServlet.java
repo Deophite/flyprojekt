@@ -58,7 +58,7 @@ public class UploadServlet extends HttpServlet {
         try (InputStream inputStream = filePart.getInputStream()) {
             Files.copy(inputStream, inputFile, StandardCopyOption.REPLACE_EXISTING);
         }
-// .............................. KONVERTIERUNG...........................................................
+// .................................. KONVERTIERUNG...........................................................
         // Konvertierung und Import
         try {
             String csvPfad = ConverterAnders.convertXlsToCsv(inputFile.toString(), uploadDir.toString());
