@@ -46,7 +46,7 @@
       const form =  document.getElementById("form");
       const btn = document.getElementById("submit");
       const result = document.getElementById("result");
-      const waitMessage = document.getElementById("submit");
+      const waitMessage = document.getElementById("onSubmit1");
       let isReady = false;
 
         form.addEventListener("submit", function asd (e) {
