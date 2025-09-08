@@ -7,14 +7,9 @@ import java.io.File;
 
 public class ConverterAnders {
 
-    // Wird z. B. in DatenImport als Präfix genutzt
+    // Wird z.B. in DatenImport als Präfix genutzt
     public static String convname = "unbekannt";
 
-    /**
-     * Konvertiert eine XLS-Datei aus uploads/dateixls/ in eine CSV in uploads/dateicsv/
-     * @param inputPfad Der komplette Pfad zur .xls-Datei
-     * @return Der Pfad zur erzeugten .csv-Datei
-     */
     public static String convertXlsToCsv(String inputPfad, String uploadDir) {
 
         try {
@@ -42,12 +37,7 @@ public class ConverterAnders {
         }
     }
 
-    /**
-     * Extrahiert den reinen Dateinamen ohne Pfad und Endung
-     * Beispiel: "uploads/dateixls/AA.xls" → "AA"
-     * @param inputPfad kompletter Pfad zur Datei
-     * @return Dateiname ohne Erweiterung
-     */
+    //Methode zum extrahieren des puren Namens aus dem Pfad + Datei.
     public static String DateiName(String inputPfad) {
         File file = new File(inputPfad);
         String name = file.getName(); // z.B. "AA.xls"
