@@ -28,14 +28,15 @@
 <body>
 
 <main class="page-content">
-    <h4>Bitte w&auml;hlen Sie die Buchungsliste zum Hochladen in die Datenbank aus</h4>
+    <h4 id="headline">Bitte w&auml;hlen Sie die Buchungsliste zum Hochladen in die Datenbank aus</h4>
     <form action="${pageContext.request.contextPath}/fileUpload" method="post" enctype="multipart/form-data" id="form">
         <input type="file" name="datei" accept=".xls" required />
         <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls</p>
         <button type="submit">Senden</button>
     </form>
-    <p id="onSubmit1" style="display: none">Ihre Datei werden in die Datenbank gespeichert. Haben Sie ein bisschen Geduld. Das kann bis paar Minuten dauern!</p>
+    <p id="onSubmit1" style="display: none">Ihre Datei wird in die Datenbank gespeichert. Haben Sie ein bisschen Geduld. Das kann bis paar Minuten dauern!</p>
     <p id="result"></p>
+    <p id="timer" style="display: none"></p>
 </main>
 
 <script>
@@ -47,32 +48,69 @@
       const btn = document.getElementById("submit");
       const result = document.getElementById("result");
       const waitMessage = document.getElementById("onSubmit1");
+      const timer = document.getElementById("timer");
+      const headline = document.getElementById("headline");
+
       let isReady = false;
+      let seconds = 0;
 
-        form.addEventListener("submit", function asd (e) {
-        e.preventDefault();
-        if (isReady) {
-            result.innerHTML= "";
-        }
-        waitMessage.setAttribute("style", "display: block");
-        const formData = new FormData(this);
+      function count () {
 
-        fetch("${pageContext.request.contextPath}/fileUpload", {
-            method: "POST",
-            body: formData
-        }).then(res => res.text()).then((res) => {
+         let minutes = 0;
+         let sec = 0;
 
-            waitMessage.setAttribute("style", "display: none");
+          if (seconds > 59) {
+            minutes = Math.floor(seconds / 60);
+          }
+          sec = Math.floor(seconds % 60);
 
-            if (res.toString().includes("erfolgreich")) {
-                isReady = true;
-                result.setAttribute("style", "color: green; font-weight: bold;");
-            } else {
-                result.setAttribute("style", "color: red");
-            }
-            result.innerHTML = res;
-            }).catch(err => console.log(err));
-    });
+          if (sec < 10) {
+              timer.innerHTML = minutes + ':' + "0" + sec;
+          } else {
+              timer.innerHTML = minutes + ':' + sec;
+          }
+          seconds += 1;
+      }
+
+
+          form.addEventListener("submit", function asd (e) {
+              e.preventDefault();
+              if (isReady) {
+                  result.innerHTML= "";
+              }
+              form.setAttribute("style", "display: none");
+              headline.setAttribute("style", "display: none");
+              waitMessage.setAttribute("style", "display: block");
+              timer.setAttribute("style", "display: block");
+
+              setInterval(count, 1000);
+
+
+              const formData = new FormData(this);
+
+              fetch("${pageContext.request.contextPath}/fileUpload", {
+                  method: "POST",
+                  body: formData
+              }).then(res => res.text()).then((res) => {
+
+                  waitMessage.setAttribute("style", "display: none");
+
+                  if (res.toString().includes("erfolgreich")) {
+                      isReady = true;
+                      result.setAttribute("style", "color: green; font-weight: bold;");
+                  } else {
+                      result.setAttribute("style", "color: red");
+                  }
+                  let zeit = timer.innerHTML;
+                  timer.setAttribute("style", "display: none");
+                  result.innerHTML = res + " " + zeit;
+                  seconds = 0;
+                  form.setAttribute("style", "display: block");
+                  headline.setAttribute("style", "display: block");
+              }).catch(err => console.log(err));
+          });
+
+
 </script>
 
 </body>
