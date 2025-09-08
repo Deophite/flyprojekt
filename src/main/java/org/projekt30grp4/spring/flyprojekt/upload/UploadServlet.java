@@ -13,7 +13,7 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.nio.file.*;
 
-@WebServlet("/uploadFile")
+@WebServlet("/")
 @MultipartConfig
 public class UploadServlet extends HttpServlet {
 
@@ -41,7 +41,8 @@ public class UploadServlet extends HttpServlet {
         // Nur .xls zulassen
         String originalFileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
         if (!originalFileName.toLowerCase().endsWith(".xls")) {
-            response.getWriter().println("Fehler: Nur .xls-Dateien sind erlaubt.");
+            request.setAttribute("fehler", "Fehler: Es sind nur .xls Dateien erlaubt.");
+            request.getRequestDispatcher("/uploadresult.jsp").forward(request, response);
             return;
         }
 
@@ -73,7 +74,7 @@ public class UploadServlet extends HttpServlet {
             // Aufräumen
             Files.deleteIfExists(Paths.get(csvPfad));
             Files.deleteIfExists(inputFile);
-            // Hello
+            // Nachdem es geklappt
             response.getWriter().println("Upload, Konvertierung und Import erfolgreich.");
 
         } catch (Exception e) {
@@ -81,8 +82,6 @@ public class UploadServlet extends HttpServlet {
             response.getWriter().println("Fehler beim Verarbeiten der Datei: " + e.getMessage());
         }
     }
-
-
 
 
 }

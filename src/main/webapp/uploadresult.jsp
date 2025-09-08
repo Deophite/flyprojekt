@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="de">
+
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Excel Upload in Datenbank</title>
+    <title>Ergebnis</title>
     <style>
         body {
             font-family: verdana, serif;
@@ -25,19 +25,11 @@
     </style>
 </head>
 <body>
-<main class="page-content">
-    <h4>Bitte w&auml;hlen Sie die Buchungsliste zum Hochladen in die Datenbank aus</h4>
-    <form action="${pageContext.request.contextPath}" method="post" enctype="multipart/form-data">
-        <input type="file" name="datei" accept=".xls" required />
-        <p style="font-size: 11px">Unterst&uuml;tzte Dateiformate: .xls</p>
-        <a href="uploadresult.jsp"><button type="submit">Senden</button></a>
-    </form>
-</main>
-<br><br>
 <% if (request.getAttribute("fehler") != null) { %>
 <p style="font-weight: bold;">
     <%= request.getAttribute("fehler") %>
 </p>
 <% } %>
+<a href="upload.jsp">Zur&uuml;ck zum Formular</a>
 </body>
 </html>
