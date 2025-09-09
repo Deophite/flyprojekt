@@ -39,6 +39,10 @@
     <p id="timer" style="display: none"></p>
 </main>
 
+
+
+
+
 <script>
     // JS - Form wird ausgewählt dann beim Submit wird default gestoppt. Nachdem JS übernimmt das Control
     // und sendet die Form zu UploadServlet. Dann erwartet auf Response in dem entweder kein Fehler oder Fehler kommt.
@@ -77,7 +81,7 @@
         e.preventDefault();
 
         result.innerHTML= "";
-
+        timer.innerHTML= "";
         form.setAttribute("style", "display: none");
         headline.setAttribute("style", "display: none");
         waitMessage.setAttribute("style", "display: block");
